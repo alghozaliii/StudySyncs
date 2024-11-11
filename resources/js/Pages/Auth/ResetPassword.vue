@@ -5,6 +5,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, useForm } from '@inertiajs/vue3';
+import MainLayout from '@/Layouts/MainLayout.vue';
 
 const props = defineProps({
     email: {
@@ -32,6 +33,7 @@ const submit = () => {
 </script>
 
 <template>
+<MainLayout>x   
     <GuestLayout>
         <Head title="Reset Password" />
 
@@ -98,4 +100,5 @@ const submit = () => {
             </div>
         </form>
     </GuestLayout>
+</MainLayout>
 </template>

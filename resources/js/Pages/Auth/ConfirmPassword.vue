@@ -5,6 +5,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, useForm } from '@inertiajs/vue3';
+import MainLayout from '@/Layouts/MainLayout.vue';
 
 const form = useForm({
     password: '',
@@ -18,6 +19,7 @@ const submit = () => {
 </script>
 
 <template>
+<MainLayout>
     <GuestLayout>
         <Head title="Confirm Password" />
 
@@ -52,4 +54,5 @@ const submit = () => {
             </div>
         </form>
     </GuestLayout>
+</MainLayout>
 </template>

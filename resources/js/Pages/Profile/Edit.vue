@@ -1,8 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import DeleteUserForm from './Partials/DeleteUserForm.vue';
-import UpdatePasswordForm from './Partials/UpdatePasswordForm.vue';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm.vue';
+import DeleteUserForm from './Partials/DeleteUserForm.vue';
 import { Head } from '@inertiajs/vue3';
 
 defineProps({
@@ -20,35 +19,30 @@ defineProps({
 
     <AuthenticatedLayout>
         <template #header>
-            <h2
-                class="text-xl font-semibold leading-tight text-gray-800"
-            >
-                Profile
-            </h2>
+            <div class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white p-6 rounded-lg shadow-md">
+                <h2 class="text-3xl font-semibold leading-tight">
+                    Profile
+                </h2>
+                <p class="mt-2 text-lg font-light">
+                    Update your personal information and manage your account.
+                </p>
+            </div>
         </template>
 
-        <div class="py-12">
-            <div class="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
-                <div
-                    class="bg-white p-4 shadow sm:rounded-lg sm:p-8"
-                >
-                    <UpdateProfileInformationForm
-                        :must-verify-email="mustVerifyEmail"
-                        :status="status"
-                        class="max-w-xl"
-                    />
-                </div>
-
-                <div
-                    class="bg-white p-4 shadow sm:rounded-lg sm:p-8"
-                >
-                    <UpdatePasswordForm class="max-w-xl" />
-                </div>
-
-                <div
-                    class="bg-white p-4 shadow sm:rounded-lg sm:p-8"
-                >
-                    <DeleteUserForm class="max-w-xl" />
+        <div class="py-12 bg-gray-100">
+            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <div class="space-y-8">
+                    <!-- Profile Update Form -->
+                    <div class="bg-white p-8 shadow-lg rounded-lg border border-gray-200">
+                        <UpdateProfileInformationForm
+                            :must-verify-email="mustVerifyEmail"
+                            :status="status"
+                            class="max-w-2xl mx-auto"
+                        />
+                    </div>
+                    <DeleteUserForm>
+                        
+                    </DeleteUserForm>
                 </div>
             </div>
         </div>

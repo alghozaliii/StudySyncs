@@ -19,64 +19,107 @@ const user = usePage().props.auth.user;
 const form = useForm({
     name: user.name,
     email: user.email,
+    address: user.address || '',  // Menambahkan field address
+    phone: user.phone || '',      // Menambahkan field phone
+    birthdate: user.birthdate || '',  // Menambahkan field birthdate
 });
 </script>
 
 <template>
-    <section>
-        <header>
-            <h2 class="text-lg font-medium text-gray-900">
+    <section class="bg-gray-50 p-8 rounded-lg shadow-lg">
+        <header class="mb-6">
+            <h2 class="text-2xl font-semibold text-gray-900">
                 Profile Information
             </h2>
 
-            <p class="mt-1 text-sm text-gray-600">
+            <p class="mt-2 text-sm text-gray-600">
                 Update your account's profile information and email address.
             </p>
         </header>
 
         <form
             @submit.prevent="form.patch(route('profile.update'))"
-            class="mt-6 space-y-6"
+            class="space-y-6"
         >
-            <div>
+            <!-- Name Field -->
+            <div class="space-y-2">
                 <InputLabel for="name" value="Name" />
-
                 <TextInput
                     id="name"
                     type="text"
-                    class="mt-1 block w-full"
+                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     v-model="form.name"
                     required
                     autofocus
                     autocomplete="name"
                 />
-
-                <InputError class="mt-2" :message="form.errors.name" />
+                <InputError class="mt-2 text-sm text-red-500" :message="form.errors.name" />
             </div>
 
-            <div>
+            <!-- Email Field -->
+            <div class="space-y-2">
                 <InputLabel for="email" value="Email" />
-
                 <TextInput
                     id="email"
                     type="email"
-                    class="mt-1 block w-full"
+                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     v-model="form.email"
                     required
                     autocomplete="username"
                 />
-
-                <InputError class="mt-2" :message="form.errors.email" />
+                <InputError class="mt-2 text-sm text-red-500" :message="form.errors.email" />
             </div>
 
-            <div v-if="mustVerifyEmail && user.email_verified_at === null">
-                <p class="mt-2 text-sm text-gray-800">
+            <!-- Address Field -->
+            <div class="space-y-2">
+                <InputLabel for="address" value="Address" />
+                <TextInput
+                    id="address"
+                    type="text"
+                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    v-model="form.address"
+                    placeholder="Your address"
+                    required
+                />
+                <InputError class="mt-2 text-sm text-red-500" :message="form.errors.address" />
+            </div>
+
+            <!-- Phone Field -->
+            <div class="space-y-2">
+                <InputLabel for="phone" value="Phone" />
+                <TextInput
+                    id="phone"
+                    type="text"
+                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    v-model="form.phone"
+                    placeholder="Your phone number"
+                    required
+                />
+                <InputError class="mt-2 text-sm text-red-500" :message="form.errors.phone" />
+            </div>
+
+            <!-- Birthdate Field -->
+            <div class="space-y-2">
+                <InputLabel for="birthdate" value="Birthdate" />
+                <TextInput
+                    id="birthdate"
+                    type="date"
+                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    v-model="form.birthdate"
+                    required
+                />
+                <InputError class="mt-2 text-sm text-red-500" :message="form.errors.birthdate" />
+            </div>
+
+            <!-- Email Verification Reminder (if needed) -->
+            <div v-if="mustVerifyEmail && user.email_verified_at === null" class="mt-4 p-4 bg-yellow-50 border-l-4 border-yellow-500">
+                <p class="text-sm text-gray-800">
                     Your email address is unverified.
                     <Link
                         :href="route('verification.send')"
                         method="post"
                         as="button"
-                        class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        class="text-sm text-indigo-600 hover:text-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     >
                         Click here to re-send the verification email.
                     </Link>
@@ -90,8 +133,11 @@ const form = useForm({
                 </div>
             </div>
 
+            <!-- Save Button -->
             <div class="flex items-center gap-4">
-                <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
+                <PrimaryButton :disabled="form.processing" class="w-full py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
+                    Save
+                </PrimaryButton>
 
                 <Transition
                     enter-active-class="transition ease-in-out"
