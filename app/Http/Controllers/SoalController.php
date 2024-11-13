@@ -18,6 +18,26 @@ class SoalController extends Controller
         ]);
     }
 
+    public function tesGayaBelajar()
+{
+    // Ambil semua soal dan hanya kirimkan data soal dan jawaban (tanpa gaya belajar)
+    $soals = Soal::all()->map(function ($soal) {
+        return [
+            'id' => $soal->id,
+            'soal' => $soal->soal,
+            'jawaban_options' => [
+                $soal->jawaban_1,
+                $soal->jawaban_2,
+                $soal->jawaban_3,
+            ]
+        ];
+    });
+
+    return Inertia::render('TesGayaBelajarView', [
+        'soals' => $soals,
+    ]);
+}
+
     // Menampilkan form untuk membuat soal baru
     public function create()
     {

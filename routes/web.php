@@ -13,15 +13,12 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-});
+})->name('home');
 
-Route::get('/tes-gaya-belajar', function () {
-    return Inertia::render('TesGayaBelajarView');
-})->name('tes-gaya-belajar');
 
-Route::get('/gaya-belajar', function () {
-    return Inertia::render('GayaBelajarView');
-})->name('gaya-belajar');
+Route::get('/bantuan', function () {
+    return Inertia::render('BantuanView');
+})->name('bantuan');
 
 Route::get('/kontak', function () {
     return Inertia::render('KontakView');
@@ -36,6 +33,7 @@ Route::get('/login', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [SoalController::class, 'index'])->name('dashboard');
+    Route::get('/tes-gaya-belajar', [SoalController::class, 'tesGayaBelajar'])->name('tes-gaya-belajar');
     Route::get('/soal/add', [SoalController::class, 'create'])->name('soal.create');
     Route::post('/soal', [SoalController::class, 'store'])->name('soal.store');
     Route::get('/soal/{soal}/edit', [SoalController::class, 'edit'])->name('soal.edit');
