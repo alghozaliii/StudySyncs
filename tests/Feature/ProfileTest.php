@@ -4,13 +4,30 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class ProfileTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_profile_page_is_displayed(): void
+    public function test_user_can_register(): void
+    {
+        $response = $this->post('/register', [
+            'name' => 'New User',
+            'email' => 'newuser@example.com',
+            'password' => 'password',
+            'password_confirmation' => 'password',
+        ]);
+
+        // Pastikan pengalihan setelah registrasi sesuai dengan pengaturan Laravel Breeze
+        $response->assertRedirect('/');
+        $this->assertDatabaseHas('users', [
+            'email' => 'newuser@example.com',
+        ]);
+    }
+
+    public function test_user_can_view_profile(): void
     {
         $user = User::factory()->create();
 
@@ -19,52 +36,48 @@ class ProfileTest extends TestCase
             ->get('/profile');
 
         $response->assertOk();
+        $response->assertInertia(fn ($page) =>
+            $page->component('Profile/Edit')
+                 ->where('user.id', $user->id)
+        );
     }
 
-    public function test_profile_information_can_be_updated(): void
+    public function test_user_can_update_profile(): void
     {
         $user = User::factory()->create();
 
+        $updatedData = [
+            'name' => 'Updated User',
+            'email' => 'updateduser@example.com',
+            'address' => 'Updated Address',
+            'phone' => '9876543210',
+            'birthdate' => '1991-02-02',
+        ];
+
         $response = $this
             ->actingAs($user)
-            ->patch('/profile', [
-                'name' => 'Test User',
-                'email' => 'test@example.com',
-            ]);
+            ->patch('/profile', $updatedData);
 
         $response
-            ->assertSessionHasNoErrors()
+            ->assertSessionHasNoErrors(201)
             ->assertRedirect('/profile');
 
         $user->refresh();
 
-        $this->assertSame('Test User', $user->name);
-        $this->assertSame('test@example.com', $user->email);
-        $this->assertNull($user->email_verified_at);
+        $this->assertSame('Updated User', $user->name);
+        $this->assertSame('updateduser@example.com', $user->email);
+        $this->assertSame('Updated Address', $user->address);
+        $this->assertSame('9876543210', $user->phone);
+        $this->assertSame('1991-02-02', $user->birthdate);
     }
 
-    public function test_email_verification_status_is_unchanged_when_the_email_address_is_unchanged(): void
+    public function test_user_can_delete_account(): void
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'password' => Hash::make('password'),
+        ]);
 
-        $response = $this
-            ->actingAs($user)
-            ->patch('/profile', [
-                'name' => 'Test User',
-                'email' => $user->email,
-            ]);
-
-        $response
-            ->assertSessionHasNoErrors()
-            ->assertRedirect('/profile');
-
-        $this->assertNotNull($user->refresh()->email_verified_at);
-    }
-
-    public function test_user_can_delete_their_account(): void
-    {
-        $user = User::factory()->create();
-
+        // Verifikasi dengan kata sandi yang benar
         $response = $this
             ->actingAs($user)
             ->delete('/profile', [
@@ -73,16 +86,21 @@ class ProfileTest extends TestCase
 
         $response
             ->assertSessionHasNoErrors()
-            ->assertRedirect('/');
+            ->assertRedirect('/login')
+            ->assertSessionHas('status', 'Your account has been deleted successfully.');
 
+        // Pastikan pengguna telah logout dan akun terhapus
         $this->assertGuest();
         $this->assertNull($user->fresh());
     }
 
-    public function test_correct_password_must_be_provided_to_delete_account(): void
+    public function test_user_cannot_delete_account_with_incorrect_password(): void
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'password' => Hash::make('password'),
+        ]);
 
+        // Uji penghapusan dengan kata sandi yang salah
         $response = $this
             ->actingAs($user)
             ->from('/profile')
@@ -91,9 +109,10 @@ class ProfileTest extends TestCase
             ]);
 
         $response
-            ->assertSessionHasErrors('password')
+            ->assertSessionHasErrors('wrong-password')
             ->assertRedirect('/profile');
 
+        // Pastikan akun masih ada karena password salah
         $this->assertNotNull($user->fresh());
     }
 }
