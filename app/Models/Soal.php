@@ -13,8 +13,9 @@ class Soal extends Model
 
     protected $table = 'soals'; // Tentukan tabel sebagai "soals"
     protected $fillable = [
-        'soal', 'jawaban_1', 'jawaban_2', 'jawaban_3', 
-        'gaya_belajar_1', 'gaya_belajar_2', 'gaya_belajar_3'
+        'soal', 'jawaban_1', 'gaya_belajar_1', 'nilai_jawaban_1',
+    'jawaban_2', 'gaya_belajar_2', 'nilai_jawaban_2',
+    'jawaban_3', 'gaya_belajar_3', 'nilai_jawaban_3',
     ];
 
 }

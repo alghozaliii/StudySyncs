@@ -5,6 +5,9 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\SoalController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+
 
 Route::get('/', function () {
     return Inertia::render('HomeView', [
@@ -39,6 +42,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/soal/{soal}/edit', [SoalController::class, 'edit'])->name('soal.edit');
     Route::put('/soal/{soal}', [SoalController::class, 'update'])->name('soal.update');
     Route::delete('/soal/{id}', [SoalController::class, 'destroy'])->name('soal.destroy');
+
+    // Submit Kuisioner
+    Route::post('/submit-kuisioner', [SoalController::class, 'submitKuisioner'])->name('kuisioner.submit');
+
+
+    // Hasil Kuisioner
+    Route::get('/hasil-kuisioner', function () {
+        return Inertia::render('HasilView', [
+            'results' => Session::get('results', []),
+            'dominantStyles' => Session::get('dominantStyles', []),
+            'description' => Session::get('description', ''),
+        ]);
+    })->name('hasil.kuisioner');
+
 });
 
 

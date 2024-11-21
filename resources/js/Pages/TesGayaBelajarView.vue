@@ -1,5 +1,5 @@
 <template>
-<MainLayout>
+  <MainLayout>
     <div class="max-w-4xl mx-auto py-8">
       <h1 class="text-3xl font-semibold text-center mb-2">Tes Gaya Belajar</h1>
       <p class="text-center mb-6">Jawablah pertanyaan sesuai dengan tingkat kecocokan dengan diri sendiri</p>
@@ -9,8 +9,8 @@
 
       <!-- Display questions with answer options -->
       <div v-for="(soal, index) in paginatedSoals" :key="soal.id" class="mb-8">
-        <p class="font-semibold mb-2">{{ (currentPage - 1) * 5 + index + 1 }}. {{ soal.soal }}</p>
-        
+        <p class="font-semibold mb-2">{{ (currentPage - 1) * questionsPerPage + index + 1 }}. {{ soal.soal }}</p>
+
         <!-- Display answer options as radio buttons -->
         <div v-for="(jawaban, idx) in soal.jawaban_options" :key="idx" class="mb-2">
           <label :for="'jawaban-' + soal.id + '-' + idx" class="inline-flex items-center">
@@ -18,7 +18,7 @@
               type="radio"
               :id="'jawaban-' + soal.id + '-' + idx"
               :name="'jawaban-' + soal.id"
-              :value="jawaban"
+              :value="'jawaban_' + (idx + 1)" 
               v-model="answers[soal.id]"
               class="mr-2"
             />
@@ -27,8 +27,16 @@
         </div>
       </div>
 
-      <!-- Next Page and Submit Buttons -->
+      <!-- Navigation Buttons -->
       <div class="flex justify-between mt-8">
+        <button
+          v-if="currentPage > 1"
+          @click="previousPage"
+          class="bg-gray-500 text-white px-4 py-2 rounded"
+        >
+          Previous Page
+        </button>
+
         <button
           v-if="currentPage < totalPages"
           @click="nextPage"
@@ -40,26 +48,26 @@
         <button
           v-else
           @click="submitAnswers"
-          class="bg-blue-500 text-white px-4 py-2 rounded"
+          class="bg-green-500 text-white px-4 py-2 rounded"
         >
           Submit
         </button>
       </div>
     </div>
-</MainLayout>
+  </MainLayout>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue';
-import { usePage } from '@inertiajs/vue3';
+import { usePage, router } from '@inertiajs/vue3';
 import MainLayout from '@/Layouts/MainLayout.vue';
 
 // Fetch questions from backend props
 const { props } = usePage();
-const questions = props.soals; // Assuming this contains the structure [{ id, soal, jawaban_options: [option1, option2, ...] }, ...]
+const questions = props.soals || []; // Assuming this contains the structure [{ id, soal, jawaban_options: [option1, option2, ...] }, ...]
 
 // State variables
-const answers = ref({});  // Stores selected answer for each question
+const answers = ref({}); // Stores selected answer for each question
 const currentPage = ref(1);
 const questionsPerPage = 5;
 
@@ -78,6 +86,31 @@ const nextPage = () => {
   if (currentPage.value < totalPages) {
     currentPage.value++;
   }
+};
+
+const previousPage = () => {
+  if (currentPage.value > 1) {
+    currentPage.value--;
+  }
+};
+
+const submitAnswers = () => {
+  const payload = {
+    jawaban: answers.value, // Format data yang dikirim ke backend
+  };
+
+  router.post('/submit-kuisioner', payload, {
+    onSuccess: () => {
+      // Redirect ke halaman hasil
+      router.visit('/hasil-kuisioner', {
+        method: 'get',
+      });
+    },
+    onError: (errors) => {
+      alert('Terjadi kesalahan. Pastikan semua pertanyaan telah dijawab.');
+      console.error(errors);
+    },
+  });
 };
 
 </script>

@@ -15,7 +15,7 @@
                   <div class="flex flex-col md:flex-row items-center gap-8">
                     <div class="md:w-1/2">
                       <img 
-                        src="../../../assets/images/visual.png"
+                        src="../../../../public/images/visual.png"
                         alt="Visual Learning" 
                         class="w-full h-auto"
                       />
@@ -36,7 +36,7 @@
                   <div class="flex flex-col md:flex-row items-center gap-8">
                     <div class="md:w-1/2">
                       <img 
-                        src="../../../assets/images/auditori.png"
+                        src="../../../../public/images/auditori.png"
                         class="w-full h-auto"
                       />
                     </div>
@@ -56,7 +56,7 @@
                   <div class="flex flex-col md:flex-row items-center gap-8">
                     <div class="md:w-1/2">
                       <img 
-                        src="../../../assets/images/kinestetik.png"
+                        src="../../../../public/images/kinestetik.png"
                         alt="Kinesthetic Learning" 
                         class="w-full h-auto"
                       />

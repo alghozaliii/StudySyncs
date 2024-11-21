@@ -23,9 +23,21 @@
                     <p class="font-semibold text-lg text-gray-900 mb-2">{{ soal.soal }}</p>
 
                     <ul class="list-disc ml-6 text-gray-700">
-                        <li>{{ soal.jawaban_1 }} - <span class="font-medium">Gaya Belajar:</span> {{ soal.gaya_belajar_1 }}</li>
-                        <li>{{ soal.jawaban_2 }} - <span class="font-medium">Gaya Belajar:</span> {{ soal.gaya_belajar_2 }}</li>
-                        <li>{{ soal.jawaban_3 }} - <span class="font-medium">Gaya Belajar:</span> {{ soal.gaya_belajar_3 }}</li>
+                        <li>
+                            <span class="font-medium">Jawaban 1:</span> {{ soal.jawaban_1 }}
+                            - <span class="font-medium">Gaya Belajar:</span> {{ soal.gaya_belajar_1 }}
+                            - <span class="font-medium">Nilai:</span> {{ soal.nilai_jawaban_1 }}
+                        </li>
+                        <li>
+                            <span class="font-medium">Jawaban 2:</span> {{ soal.jawaban_2 }}
+                            - <span class="font-medium">Gaya Belajar:</span> {{ soal.gaya_belajar_2 }}
+                            - <span class="font-medium">Nilai:</span> {{ soal.nilai_jawaban_2 }}
+                        </li>
+                        <li>
+                            <span class="font-medium">Jawaban 3:</span> {{ soal.jawaban_3 }}
+                            - <span class="font-medium">Gaya Belajar:</span> {{ soal.gaya_belajar_3 }}
+                            - <span class="font-medium">Nilai:</span> {{ soal.nilai_jawaban_3 }}
+                        </li>
                     </ul>
 
                     <!-- Tombol aksi -->

@@ -1,11 +1,11 @@
 <script setup>
-import { useForm } from '@inertiajs/vue3';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { defineProps } from 'vue';
+import { useForm } from "@inertiajs/vue3";
+import InputError from "@/Components/InputError.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import TextInput from "@/Components/TextInput.vue";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import { defineProps } from "vue";
 
 const props = defineProps({
     soal: Object,
@@ -20,17 +20,20 @@ const form = useForm({
     gaya_belajar_1: props.soal.gaya_belajar_1,
     gaya_belajar_2: props.soal.gaya_belajar_2,
     gaya_belajar_3: props.soal.gaya_belajar_3,
+    nilai_jawaban_1: props.soal.nilai_jawaban_1,
+    nilai_jawaban_2: props.soal.nilai_jawaban_2,
+    nilai_jawaban_3: props.soal.nilai_jawaban_3,
 });
 
 const submit = () => {
-    form.put(route('soal.update', form.id), {
+    form.put(route("soal.update", form.id), {
         onFinish: () => form.reset(), // Reset form after submission
     });
 };
 </script>
 
 <template>
-<AuthenticatedLayout>
+    <AuthenticatedLayout>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-12">
             <h2 class="text-2xl font-semibold text-gray-800 mb-4">Edit Soal</h2>
 
@@ -62,7 +65,10 @@ const submit = () => {
                 </div>
 
                 <div class="mt-4">
-                    <InputLabel for="gaya_belajar_1" value="Gaya Belajar Jawaban 1" />
+                    <InputLabel
+                        for="gaya_belajar_1"
+                        value="Gaya Belajar Jawaban 1"
+                    />
                     <select
                         id="gaya_belajar_1"
                         class="mt-1 block w-full"
@@ -74,7 +80,25 @@ const submit = () => {
                         <option value="Visual">Visual</option>
                         <option value="Auditori">Auditori</option>
                     </select>
-                    <InputError class="mt-2" :message="form.errors.gaya_belajar_1" />
+                    <InputError
+                        class="mt-2"
+                        :message="form.errors.gaya_belajar_1"
+                    />
+                </div>
+
+                <div class="mt-4">
+                    <InputLabel for="nilai_jawaban_1" value="Nilai Jawaban 1" />
+                    <TextInput
+                        id="nilai_jawaban_1"
+                        type="number"
+                        class="mt-1 block w-full"
+                        v-model="form.nilai_jawaban_1"
+                        required
+                    />
+                    <InputError
+                        class="mt-2"
+                        :message="form.errors.nilai_jawaban_1"
+                    />
                 </div>
 
                 <div class="mt-4">
@@ -90,7 +114,10 @@ const submit = () => {
                 </div>
 
                 <div class="mt-4">
-                    <InputLabel for="gaya_belajar_2" value="Gaya Belajar Jawaban 2" />
+                    <InputLabel
+                        for="gaya_belajar_2"
+                        value="Gaya Belajar Jawaban 2"
+                    />
                     <select
                         id="gaya_belajar_2"
                         class="mt-1 block w-full"
@@ -102,7 +129,25 @@ const submit = () => {
                         <option value="Visual">Visual</option>
                         <option value="Auditori">Auditori</option>
                     </select>
-                    <InputError class="mt-2" :message="form.errors.gaya_belajar_2" />
+                    <InputError
+                        class="mt-2"
+                        :message="form.errors.gaya_belajar_2"
+                    />
+                </div>
+
+                <div class="mt-4">
+                    <InputLabel for="nilai_jawaban_2" value="Nilai Jawaban 2" />
+                    <TextInput
+                        id="nilai_jawaban_2"
+                        type="number"
+                        class="mt-1 block w-full"
+                        v-model="form.nilai_jawaban_2"
+                        required
+                    />
+                    <InputError
+                        class="mt-2"
+                        :message="form.errors.nilai_jawaban_2"
+                    />
                 </div>
 
                 <div class="mt-4">
@@ -118,7 +163,10 @@ const submit = () => {
                 </div>
 
                 <div class="mt-4">
-                    <InputLabel for="gaya_belajar_3" value="Gaya Belajar Jawaban 3" />
+                    <InputLabel
+                        for="gaya_belajar_3"
+                        value="Gaya Belajar Jawaban 3"
+                    />
                     <select
                         id="gaya_belajar_3"
                         class="mt-1 block w-full"
@@ -130,7 +178,25 @@ const submit = () => {
                         <option value="Visual">Visual</option>
                         <option value="Auditori">Auditori</option>
                     </select>
-                    <InputError class="mt-2" :message="form.errors.gaya_belajar_3" />
+                    <InputError
+                        class="mt-2"
+                        :message="form.errors.gaya_belajar_3"
+                    />
+                </div>
+
+                <div class="mt-4">
+                    <InputLabel for="nilai_jawaban_3" value="Nilai Jawaban 3" />
+                    <TextInput
+                        id="nilai_jawaban_3"
+                        type="number"
+                        class="mt-1 block w-full"
+                        v-model="form.nilai_jawaban_3"
+                        required
+                    />
+                    <InputError
+                        class="mt-2"
+                        :message="form.errors.nilai_jawaban_3"
+                    />
                 </div>
 
                 <div class="mt-4 flex items-center justify-end">
