@@ -91,9 +91,10 @@ const submit = () => {
                     <TextInput
                         id="nilai_jawaban_1"
                         type="number"
-                        class="mt-1 block w-full"
+                        class="mt-1 block w-full bg-gray-200"
                         v-model="form.nilai_jawaban_1"
                         required
+                        disabled
                     />
                     <InputError
                         class="mt-2"
@@ -140,9 +141,10 @@ const submit = () => {
                     <TextInput
                         id="nilai_jawaban_2"
                         type="number"
-                        class="mt-1 block w-full"
+                        class="mt-1 block w-full bg-gray-200"
                         v-model="form.nilai_jawaban_2"
                         required
+                        disabled
                     />
                     <InputError
                         class="mt-2"
@@ -189,9 +191,10 @@ const submit = () => {
                     <TextInput
                         id="nilai_jawaban_3"
                         type="number"
-                        class="mt-1 block w-full"
+                        class="mt-1 block w-full bg-gray-200"
                         v-model="form.nilai_jawaban_3"
                         required
+                        disabled
                     />
                     <InputError
                         class="mt-2"

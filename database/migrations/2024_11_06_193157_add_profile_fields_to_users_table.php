@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -15,6 +14,8 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('phone')->nullable();
             $table->date('birthdate')->nullable();
+            $table->string('school_origin')->nullable();
+            $table->string('age_category')->nullable();
         });
     }
 
@@ -25,6 +26,11 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
+            $table->dropColumn('address');
+            $table->dropColumn('phone');
+            $table->dropColumn('birthdate');
+            $table->dropColumn('school_origin');
+            $table->dropColumn('age_category'); 
         });
     }
 };

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RiwayatController;
+use App\Models\HasilGayaBelajar;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -18,6 +20,23 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
+Route::middleware(['auth'])->get('/dashboard-user', function () {
+    $user = auth()->user(); // Mengambil data pengguna yang sedang login
+    $learningHistory = HasilGayaBelajar::where('user_id', $user->id)->latest()->get(); // Riwayat gaya belajar berdasarkan user_id
+
+    // Tips untuk masing-masing gaya belajar
+    $learningTips = [
+        'Visual' => 'Gunakan alat bantu visual seperti gambar, diagram, atau grafik untuk mempermudah pemahaman materi.',
+        'Auditori' => 'Cobalah belajar dengan mendengarkan rekaman atau menjelaskan materi pada orang lain untuk memperdalam pemahaman.',
+        'Kinestetik' => 'Praktikkan langsung materi dengan membuat simulasi atau percakapan fisik agar lebih mudah mengingat informasi.',
+    ];
+
+    return Inertia::render('DashboardUser', [
+        'user' => $user,
+        'learningHistory' => $learningHistory,
+        'learningTips' => $learningTips, // Menyertakan tips berdasarkan gaya belajar
+    ]);
+})->name('dashboarduser');
 
 Route::get('/bantuan', function () {
     return Inertia::render('BantuanView');
@@ -56,6 +75,11 @@ Route::middleware('auth')->group(function () {
         ]);
     })->name('hasil.kuisioner');
 
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/riwayat-test', [RiwayatController::class, 'index'])->name('riwayat.test.index');
+    Route::get('/riwayat-test/{id}', [RiwayatController::class, 'show'])->name('riwayat.test.show');
 });
 
 

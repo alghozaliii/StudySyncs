@@ -21,6 +21,8 @@ class SoalController extends Controller
         ]);
     }
 
+    
+
     public function tesGayaBelajar()
     {
         // Ambil semua soal dan hanya kirimkan data soal dan jawaban (tanpa gaya belajar)

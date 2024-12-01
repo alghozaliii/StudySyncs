@@ -1,5 +1,5 @@
 <template>
-    <HeaderContent />
+    <MainLayout>
     <div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <!-- Header Section -->
       <div class="max-w-7xl mx-auto text-center mb-12">
@@ -89,13 +89,12 @@
         </div>
       </div>
     </div>
-    <FooterContent />
+    </MainLayout>
   </template>
   
   <script setup>
   import { ref } from 'vue'
-  import HeaderContent from '@/Components/HeaderContent.vue'
-  import FooterContent from '@/Components/FooterContent.vue'
+  import MainLayout from '@/Layouts/MainLayout.vue';
   
   const formData = ref({
     name: '',

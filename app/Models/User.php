@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Carbon\Carbon;
 
 class User extends Authenticatable
 {
@@ -23,7 +24,10 @@ class User extends Authenticatable
         'password',
         'address',
         'phone',
-        'birthdate'
+        'birthdate',
+        'school_origin',
+        'age_category',
+
     ];
 
     /**
@@ -46,6 +50,30 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'birthdate' => 'date',
         ];
+    }
+
+     /**
+     * Set the age_category based on the birthdate.
+     *
+     * @param  mixed  $value
+     * @return void
+     */
+    public function setAgeCategoryAttribute($value)
+    {
+        if ($this->birthdate) {
+            $birthdate = Carbon::parse($this->birthdate);
+            $age = $birthdate->age;
+
+            // Tentukan kategori usia berdasarkan umur
+            if ($age >= 0 && $age <= 12) {
+                $this->attributes['age_category'] = 'Anak-anak'; // Anak-anak
+            } elseif ($age >= 13 && $age <= 19) {
+                $this->attributes['age_category'] = 'Remaja'; // Remaja
+            } else {
+                $this->attributes['age_category'] = 'Dewasa'; // Dewasa
+            }
+        }
     }
 }
