@@ -68,11 +68,11 @@ class User extends Authenticatable
 
             // Tentukan kategori usia berdasarkan umur
             if ($age >= 0 && $age <= 12) {
-                $this->attributes['age_category'] = 'Anak-anak'; // Anak-anak
+                $this->attributes['age_category'] = 'Anak-anak'; 
             } elseif ($age >= 13 && $age <= 19) {
-                $this->attributes['age_category'] = 'Remaja'; // Remaja
+                $this->attributes['age_category'] = 'Remaja'; 
             } else {
-                $this->attributes['age_category'] = 'Dewasa'; // Dewasa
+                $this->attributes['age_category'] = 'Dewasa'; 
             }
         }
     }

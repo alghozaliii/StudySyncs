@@ -18,26 +18,12 @@ class RiwayatController extends Controller
             ->get();
 
         // Kirim data pengguna dan riwayat tes gaya belajar ke tampilan menggunakan Inertia
-        return inertia('RiwayatTest/Index', [
+        return inertia('RiwayatView', [
             'user' => $user,
             'learningHistory' => $learningHistory
         ]);
     }
 
-    // Menampilkan detail riwayat tes gaya belajar
-    public function show($id)
-    {
-        $user = auth()->user();
-        
-        // Ambil riwayat tes gaya belajar berdasarkan ID
-        $history = HasilGayaBelajar::findOrFail($id);
-        
-        // Kirim data ke tampilan menggunakan Inertia
-        return inertia('RiwayatTest/Show', [
-            'user' => $user,
-            'history' => $history
-        ]);
-    }
 }
 
 

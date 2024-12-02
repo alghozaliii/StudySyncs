@@ -11,7 +11,7 @@ class Soal extends Model
 {
     use HasFactory;
 
-    protected $table = 'soals'; // Tentukan tabel sebagai "soals"
+    protected $table = 'soals'; 
     protected $fillable = [
         'soal', 'jawaban_1', 'gaya_belajar_1', 'nilai_jawaban_1',
     'jawaban_2', 'gaya_belajar_2', 'nilai_jawaban_2',

@@ -69,7 +69,7 @@ const questions = props.soals || []; // Assuming this contains the structure [{ 
 // State variables
 const answers = ref({}); // Stores selected answer for each question
 const currentPage = ref(1);
-const questionsPerPage = 5;
+const questionsPerPage = 10;
 
 // Calculate total pages based on the number of questions
 const totalPages = Math.ceil(questions.length / questionsPerPage);

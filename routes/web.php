@@ -79,7 +79,6 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/riwayat-test', [RiwayatController::class, 'index'])->name('riwayat.test.index');
-    Route::get('/riwayat-test/{id}', [RiwayatController::class, 'show'])->name('riwayat.test.show');
 });
 
 
